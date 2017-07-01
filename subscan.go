@@ -100,7 +100,7 @@ func consume(id int, jobs <-chan *Job) {
 }
 
 func main() {
-	max_workers := flag.Int("t", 500, "Threads as int")
+	max_workers := flag.Int("t", 1500, "Threads as int")
 	inpath := flag.String("i", "ips.csv", "in.txt")
 	outpath_ := flag.String("o", "ip_out.txt", "out.txt")
 	flag.Parse()
