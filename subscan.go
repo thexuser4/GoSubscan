@@ -1,5 +1,5 @@
+//golang 1.8.3
 package main
-
 import (
 	"sync"
 	"os"
