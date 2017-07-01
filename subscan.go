@@ -1,5 +1,5 @@
-//golang 1.8.3
 package main
+
 import (
 	"sync"
 	"os"
@@ -48,14 +48,15 @@ func AppendStringToFile(path, text string) error {
 	return nil
 }
 
-func sum(url string) {
+func sum(url string)bool {
 	req := doRequest(url)
 	if req == false {
-		return
+		return false
 	}
 	fmt.Println(true, url)
 	AppendStringToFile(outpath, url)
 	atomic.AddUint64(&ops, 1)
+	return true
 }
 
 func w(r string) {
@@ -73,7 +74,8 @@ func w(r string) {
 	result := extract.Extract(url)
 	for i := 0; i < 100; i++ {
 		t := strconv.Itoa(i)
-		sum("edc"+t+"."+result.Root+"."+result.Tld)
+		s := sum("edc"+t+"."+result.Root+"."+result.Tld)
+		if s == true{return}
 	}
 }
 
