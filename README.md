@@ -9,6 +9,7 @@ IP list --> DNA Lookup for domain --> see if subdomain "edc" - "edc99" is valid 
 
 If you would like to compile install:
 go get github.com/valyala/fasthttp
+
 go get github.com/joeguo/tldextract
 
 
