@@ -1,2 +1,12 @@
 # GoSubscan
 Validate if a sub domain exists from IP.
+
+Runs concurrently and uses "FastHTTP" for ultra fast HTTP requests.
+
+WOrkflow:
+IP list --> DNA Lookup for domain --> see if subdomain "edc" - "edc99" us valid --> saves valid subdomains.
+
+
+If you would like to compile install:
+go get github.com/valyala/fasthttp
+go get github.com/joeguo/tldextract
