@@ -77,7 +77,7 @@ func w(r string) {
 	for i := 0; i < 100; i++ {
 		t := strconv.Itoa(i)
 		url := "edc"+t+"."+result.Root+"."+result.Tld
-		fmt.Println("Scanning:",url)
+		//fmt.Println("Scanning:",url)
 		s := sum(url)
 		if s == true{return}
 	}
