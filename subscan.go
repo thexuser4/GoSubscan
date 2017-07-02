@@ -18,6 +18,7 @@ import (
 var wg sync.WaitGroup
 var ops uint64 = 0 //atomic counter
 var outpath = ""
+var show bool = true
 
 type Job struct {
 	Work string
@@ -72,12 +73,17 @@ func w(r string) {
 	cache := "tld.cache"
 	extract, _ := tldextract.New(cache, false)
 	result := extract.Extract(url)
+	if show == true{
+		fmt.Println("Scanning:","edc."+result.Root+"."+result.Tld)
+	}
 	s := sum("edc."+result.Root+"."+result.Tld)
 	if s == true{return}
 	for i := 0; i < 100; i++ {
 		t := strconv.Itoa(i)
 		url := "edc"+t+"."+result.Root+"."+result.Tld
-		//fmt.Println("Scanning:",url)
+		if show == true{
+			fmt.Println("Scanning:",url)
+		}
 		s := sum(url)
 		if s == true{return}
 	}
@@ -107,8 +113,10 @@ func main() {
 	max_workers := flag.Int("t", 5000, "Threads as int")
 	inpath := flag.String("i", "ips.csv", "in.txt")
 	outpath_ := flag.String("o", "ip_out.txt", "out.txt")
+	show_ := flag.Bool("s", true, "show log")
 	flag.Parse()
 	outpath = *outpath_
+	show = *show_
 	jobs := make(chan *Job, 150000) // Buffered channel
 	start := time.Now()             //start timer
 	// Start consumers:
