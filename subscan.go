@@ -1,18 +1,18 @@
 package main
 
 import (
-	"sync"
-	"os"
-	"bufio"
-	"strings"
-	"flag"
-	"time"
-	"fmt"
-	"sync/atomic"
-	"net"
-	"github.com/valyala/fasthttp"
-	"github.com/joeguo/tldextract"
-	"strconv"
+"sync"
+"os"
+"bufio"
+"strings"
+"flag"
+"time"
+"fmt"
+"sync/atomic"
+"net"
+"github.com/valyala/fasthttp"
+"github.com/joeguo/tldextract"
+"strconv"
 )
 
 var wg sync.WaitGroup
@@ -72,9 +72,13 @@ func w(r string) {
 	cache := "tld.cache"
 	extract, _ := tldextract.New(cache, false)
 	result := extract.Extract(url)
+	s := sum("edc."+result.Root+"."+result.Tld)
+	if s == true{return}
 	for i := 0; i < 100; i++ {
 		t := strconv.Itoa(i)
-		s := sum("edc"+t+"."+result.Root+"."+result.Tld)
+		url := "edc"+t+"."+result.Root+"."+result.Tld
+		fmt.Println("Scanning:",url)
+		s := sum(url)
 		if s == true{return}
 	}
 }
@@ -100,7 +104,7 @@ func consume(id int, jobs <-chan *Job) {
 }
 
 func main() {
-	max_workers := flag.Int("t", 1500, "Threads as int")
+	max_workers := flag.Int("t", 5000, "Threads as int")
 	inpath := flag.String("i", "ips.csv", "in.txt")
 	outpath_ := flag.String("o", "ip_out.txt", "out.txt")
 	flag.Parse()
